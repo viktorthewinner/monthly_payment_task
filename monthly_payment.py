@@ -4,7 +4,11 @@ import matplotlib.pyplot as plt
 
 import os
 # se seteaza calea catre cheia json
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\victo\OneDrive\Desktop\CogniSearch\Script Monthly Payment\marketingdatahub-452910-cb633ca91402.json"
+# Obține calea completă către folderul în care se află acest script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Calea către fișierul de autentificare (în același folder)
+KEY_PATH = os.path.join(BASE_DIR, "marketingdatahub-452910-cb633ca91402.json")
 
 
 nume_tabel='marketingdatahub-452910.Google_Ads_Data.ads_AccountConversionStats_5693305474'
@@ -19,7 +23,8 @@ if not os.path.exists(folder_output):
 
 
 # Inițializează clientul BigQuery (autentificarea trebuie să fie configurată cu cheia JSON)
-client = bigquery.Client()
+client = bigquery.Client.from_service_account_json(KEY_PATH)
+
 
 
 print(f"Procesare: {nume_tabel}")
